@@ -13,7 +13,7 @@ require 'spec_helper'
 
 describe User do
   
-  before { @user = User.new(name: "Kyle Hawke", email: "Kyle.hawke@whinot.com", password: "foobar", password_confirmation: "foobar") }
+  before { @user = User.new(name: "Kyle Hawke", email: "KYLE.hawke@whinot.com", password: "foobar", password_confirmation: "foobar") }
 
   subject { @user }
 
