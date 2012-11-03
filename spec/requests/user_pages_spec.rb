@@ -55,4 +55,46 @@ describe "User pages" do
   	it { should have_selector('h1', text: user.name) }
   	it { should have_selector('title', text: user.name)}
   end
+
+  describe "edit" do
+  	let(:user) { FactoryGirl.create(:user) }
+    before do
+    	sign_in user
+    	visit edit_user_path(user) 
+    end
+
+    let(:submit) { "Save changes" }
+
+    it { should have_selector('h1', :text => 'Update your profile') }
+    it { should have_selector('title',
+                        :text => "#{ base_title } | Edit user") }
+
+    describe "with invalid information" do
+      before { click_button submit }
+
+      it { should have_content('error') }
+    end
+
+    describe "with valid information" do
+      let(:new_name) 	{ "Example User" }
+      let(:new_email) 	{ "user@example.com" }
+      before do
+        fill_in "Name",         with: new_name
+        fill_in "Email",        with: new_email
+        fill_in "Password",     with: user.password
+        fill_in "Confirm password", with: user.password
+      end
+
+      describe "after updating the user" do
+      	before { click_button "Save changes" }
+
+      	it { should have_link('Sign out') }
+      	it { should have_selector('h1', text: new_name) }
+      	it { should have_selector('div.alert.alert-success') }
+      	specify { user.reload.name.should == new_name }
+      	specify { user.reload.email.should == new_email}
+      end
+    end
+  end
+
 end
