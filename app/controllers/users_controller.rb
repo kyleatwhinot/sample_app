@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
 
-before_filter :signed_in_user, only: [:edit, :update]
+before_filter :signed_in_user, only: [:index, :edit, :update, :destroy]
 before_filter :correct_user, only: [:edit, :update]
+before_filter :admin_user, only: :destroy
+
+  def index
+    @users = User.paginate(page: params[:page])
+  end
 
   def new
   	@user = User.new
@@ -12,7 +17,6 @@ before_filter :correct_user, only: [:edit, :update]
   	if @user.save
   		flash[:success] = "Welcome to the Sample App!"
   		sign_in @user
-  		# not exactly sure why this works... need to learn more
   		redirect_to @user
   	else
   		render 'new'
@@ -20,15 +24,14 @@ before_filter :correct_user, only: [:edit, :update]
   end
 
   def show
-  	@user = User.find(params[:id])
+    @user = User.find(params[:id])
   end
 
   def edit
-    @user = User.find(params[:id])
+
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       # Handle a successful update.
       flash[:success] = "Profile updated"
@@ -39,14 +42,27 @@ before_filter :correct_user, only: [:edit, :update]
     end
   end
 
+  def destroy
+    u = User.find(params[:id]).destroy
+    flash[:success] = "#{u.name} deleted."
+    redirect_to users_url
+  end
+
   private
 
   def signed_in_user
-    redirect_to signin_url, notice: "Please sign in." unless signed_in?
+    unless signed_in?
+      store_location
+      redirect_to signin_url, notice: "Please sign in."
+    end
   end
 
   def correct_user
      @user = User.find(params[:id])
      redirect_to(root_path) unless current_user?(@user)
+  end
+
+  def admin_user
+     redirect_to(root_path) unless current_user.admin?
    end
 end

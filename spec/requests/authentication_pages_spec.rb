@@ -9,18 +9,18 @@ describe "AuthenticationPages" do
 	describe "sign in page" do
 		before { visit signin_path }
 
-		it { should have_selector('h1', text: "Sign in") }
+		it { should have_correct_h1_content("Sign in") }
 		it { should have_selector('title', text: "Sign in") }
 	
 		describe "with invalid information" do
 			before { click_button :submit }
 
-			it { should have_selector('div.alert.alert-error', text: "Invalid") }
+			it { should have_error_message("Invalid") }
 
 			describe "after visiting another page" do
   				before { click_link "Home" }
   				
-  				it { should_not have_selector('div.alert.alert-error') }
+  				it { should_not have_error_message }
 			end
 		end
 
@@ -34,6 +34,7 @@ describe "AuthenticationPages" do
 			end
 
 			it { should have_selector('title', text: user.name) }
+			it { should have_link('Users', href: users_path) }
 			it { should have_link('Profile', href: user_path(user)) }
 			it { should have_link('Settings', href: edit_user_path(user)) }
 			it { should have_link('Sign out', href: signout_path) }
@@ -50,7 +51,12 @@ describe "AuthenticationPages" do
 
 			describe "visit unauthorized user page" do
 				before { visit edit_user_path(user) }
-				it { should have_selector('h1', text:"Sign in") }
+				it { should have_correct_h1_content("Sign in") }
+			end
+
+			describe "visit users index" do
+				before { visit users_path }
+				it { should have_correct_h1_content("Sign in") }
 			end
 
 			describe "redirect to sign in page" do
@@ -66,7 +72,7 @@ describe "AuthenticationPages" do
 
 			describe "visiting other users edit page" do
 				before { visit edit_user_path(wronguser) }
-				it { should_not have_selector('h1', text: "Edit profile") }
+				it { should_not have_correct_h1_content("Edit profile") }
 			end
 
 			describe "visiting other users edit page in the browser" do
@@ -74,6 +80,32 @@ describe "AuthenticationPages" do
 				specify { response.should redirect_to(root_path) }
 			end
 		end
-
 	end
+
+	describe "access edit user page as unauthenticated user" do
+	let(:user) { FactoryGirl.create(:user) }
+		before do 
+			visit edit_user_path(user)
+			fill_in "Email", 	with: user.email
+			fill_in "Password",	with: user.password
+			click_button :submit
+		end
+
+		describe "should have friendly forwarding after sign in" do
+			it { should have_correct_h1_content("Update") }
+		end
+	end
+
+	describe "as non-admin user" do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:non_admin) { FactoryGirl.create(:user) }
+
+      before { sign_in non_admin }
+
+      describe "submitting a DELETE request to the Users#destroy action" do
+        before { delete user_path(user) }
+        specify { response.should redirect_to(root_path) }
+   	  end
+
+   	end   
 end
