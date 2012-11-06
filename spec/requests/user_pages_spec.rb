@@ -46,11 +46,44 @@ describe "User pages" do
     end
   end
 
-  describe "Profile page" do
+  describe "profile page" do
   	let(:user) { FactoryGirl.create(:user) }
   	before { visit user_path(user) }
   	it { should have_correct_h1_content(user.name) }
   	it { should have_selector('title', text: user.name)}
+  end
+
+  describe "profile page" do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:other_user) { FactoryGirl.create(:user, email: "Other@example.com") }
+    let!(:m1) { FactoryGirl.create(:micropost, user: user, content: "Message1") }
+    let!(:m2) { FactoryGirl.create(:micropost, user: user, content: "message 2") }
+
+    before { visit user_path(user) }
+
+    it { should have_correct_h1_content(user.name) }
+    describe "microposts" do
+      it { should have_content(m1.content) }
+      it { should have_content(m2.content) }
+      it { should have_content(user.microposts.count) }
+    end
+
+    describe "delete microposts" do
+      describe "for correct user" do
+        before do
+          sign_in user
+          visit user_path(user)
+        end
+        it { should have_content("delete") }
+      end
+      describe "for wrong user" do
+        before do
+          sign_in other_user
+          visit user_path(other_user)
+        end
+        it { should_not have_content("delete") }
+      end
+    end
   end
 
   describe "index" do

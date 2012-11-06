@@ -28,9 +28,7 @@ describe "AuthenticationPages" do
 		let(:user) { FactoryGirl.create(:user) }
 
 			before do
-				fill_in "Email", 	with: user.email
-				fill_in "Password",	with: user.password
-				click_button :submit
+				sign_in(user)
 			end
 
 			it { should have_selector('title', text: user.name) }
@@ -61,6 +59,16 @@ describe "AuthenticationPages" do
 
 			describe "redirect to sign in page" do
 				before { put user_path(user) }
+				specify { response.should redirect_to(signin_path) }
+			end
+
+			describe "create micropost" do
+				before { post microposts_path }
+				specify { response.should redirect_to(signin_path) }
+			end
+
+			describe "delete micropost" do
+				before { delete micropost_path(FactoryGirl.create(:micropost)) }
 				specify { response.should redirect_to(signin_path) }
 			end
 		end
@@ -94,6 +102,20 @@ describe "AuthenticationPages" do
 		describe "should have friendly forwarding after sign in" do
 			it { should have_correct_h1_content("Update") }
 		end
+
+		describe "when signing in again" do
+            before do
+              delete signout_path
+              visit signin_path
+              fill_in "Email",    with: user.email
+              fill_in "Password", with: user.password
+              click_button "Sign in"
+            end
+
+            it "should render the default (profile) page" do
+              page.should have_selector('title', text: user.name) 
+            end
+        end
 	end
 
 	describe "as non-admin user" do
@@ -106,6 +128,11 @@ describe "AuthenticationPages" do
         before { delete user_path(user) }
         specify { response.should redirect_to(root_path) }
    	  end
-
    	end   
+
+   	describe "user links should not display when not logged in" do
+	   	it { should_not have_link('Profile') }
+   		it { should_not have_link('Settings') }
+   	end
 end
+
