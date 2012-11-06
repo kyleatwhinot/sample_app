@@ -2,10 +2,13 @@ SampleApp::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
+  resources :contacts, only: [:create]
+  resources :asks, only: [:new, :create]
+
 
   match '/help',    to: 'static_pages#help'
   match '/about',   to: 'static_pages#about'
-  match '/contact', to: 'static_pages#contact'
+  match '/contact_us', to: 'static_pages#contact_us'
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'
   # match '/edit_profile', to: 'users#edit'

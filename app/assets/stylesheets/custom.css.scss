@@ -45,6 +45,14 @@ h1 {
   text-align: center;
 }
 
+.dow {
+  margin-bottom: 0px;
+  text-align: left;
+  font-size: 2.5em;
+  line-height: .5;
+  margin-top: 50px;
+}
+
 h2 {
   font-size: 1.7em;
   letter-spacing: -1px;
@@ -52,6 +60,14 @@ h2 {
   text-align: center;
   font-weight: normal;
   color: $grayLight;
+}
+
+.subtitle {
+  text-align: left;
+  font-size: 2.0em;
+  color: $gray;
+  margin-top: 50px;
+  margin-bottom: 10px;
 }
 
 p {

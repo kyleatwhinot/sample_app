@@ -14,15 +14,29 @@
     </div>
   </div>  
 <% else %>
-<div class="center hero-unit">
-  <h1>Welcome to the Sample App</h1>
-
-  <h2>
-    This is the home page for the
-    <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>
-    sample application.
-  </h2>
-
-  <%= link_to "Sign up now!", signup_path , class: "btn btn-large btn-primary" %>
+<div class="row">
+<div class="span3">
+  <%= render 'shared/contact_text' %>
+  <%= render 'shared/contact_text_long' %>
+  <%= render 'shared/contact_form' %>
+</div>
+<div class="span3">
+  <%= render 'shared/ask_text' %>
+  <%= render 'shared/ask_text_long' %>
+</div>
+<div class="span3">
+  <h1 class="dow"><% unless day_off?(dft(2)) %><%= dft(2) %><% else %><%= dft(2+3) %><% end %></h1>
+  <hr/>
+  <h2 class="subtitle">Help others</h2 class="subtitle">
+  <p><em>Pay it forward because what goes around comes around.</br></br></em></p>
+  <p class="lead"><% unless day_off?(dft(2)) %><%= "On #{dft(2).capitalize}" %><% else %><%= "On #{dft(2+3).capitalize}" %><% end %> we will introduce you to other entrepreneurs who you might be able to help.</p>
+</div>
+<div class="span3">
+  <h1 class="dow"><% unless day_off?(dft(3)) %><%= dft(3) %><% else %><%= dft(3+3) %><% end %></h1>
+  <hr/>
+  <h2 class="subtitle">ASK Follow-up</h2 class="subtitle">
+  <p><em>Nothing happens easily or automatically. You must follow up.</br></br></em></p>
+  <p class="lead"><% unless day_off?(dft(3)) %><%= "On #{dft(3).capitalize}" %><% else %><%= "On #{dft(3+3).capitalize}" %><% end %> we will remind you to follow-up with the contacts and asks you made recently.</p>
+</div>
 </div>
 <% end %>
