@@ -1,7 +1,5 @@
 <%= form_for(@contact) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-  <div class="field">
-    <%= f.text_field :name, placeholder: "contact name..." %>
-  </div>
+  <%= f.text_field :name, placeholder: "contact name..." %>
   <%= f.submit "Add name", class: "btn btn-primary" %>
 <% end %>

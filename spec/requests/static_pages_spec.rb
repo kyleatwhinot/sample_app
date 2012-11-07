@@ -9,7 +9,7 @@ describe "Static pages" do
 
     before { visit root_path }
 
-    it { should have_correct_h1_content('Sample App') }
+    it { should have_correct_h1_content('TODAY') }
     it { should_not have_selector('title',
                         :text => "| Home") }
     it { should have_selector('title',
@@ -23,6 +23,7 @@ describe "Static pages" do
         sign_in user
         visit root_path
       end
+
       it { should have_correct_h1_content(user.name) }
       it { should have_content("microposts") }
 
@@ -31,6 +32,17 @@ describe "Static pages" do
           page.should have_selector("li##{item.id}", text: item.content)
           page.should have_content("delete")
         end
+      end
+
+      describe "follower/following counts" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        before do
+          other_user.follow!(user)
+          visit root_path
+        end
+
+        it { should have_link("0 following", href: following_user_path(user)) }
+        it { should have_link("1 followers", href: followers_user_path(user)) }
       end
     end
   end
@@ -55,7 +67,7 @@ describe "Static pages" do
 
   describe "Contact page" do
 
-    before { visit contact_path }
+    before { visit contact_us_path }
 
     it { should have_correct_h1_content('Contact') }
     it { should have_selector('title',

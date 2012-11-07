@@ -118,6 +118,24 @@ describe "AuthenticationPages" do
         end
 	end
 
+	describe "for non-signed in users" do
+		let(:user) { FactoryGirl.create(:user) }
+
+		describe "in users controller" do
+
+			describe "visiting the following page" do
+          		before { visit following_user_path(user) }
+          		it { should have_selector('title', text: 'Sign in') }
+        	end
+
+        	describe "visiting the followers page" do
+          		before { visit followers_user_path(user) }
+         		it { should have_selector('title', text: 'Sign in') }
+       		end
+       	end
+    end
+
+
 	describe "as non-admin user" do
       let(:user) { FactoryGirl.create(:user) }
       let(:non_admin) { FactoryGirl.create(:user) }
