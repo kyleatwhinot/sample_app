@@ -1,0 +1,14 @@
+<% if current_user.contacts.any? %>
+  <ul>
+    <% current_user.contacts.where('done = ?', false).each do |c| %> 
+		<%= form_for(c) do |f| %>
+  			<%= render 'shared/error_messages', object: f.object %>
+  			<li>
+  				<%= c.name %>
+  				<%= f.hidden_field :done, :value=>true %>
+  				<%= f.submit "Mark as done", class: "btn btn-small btn-link"%>
+  			</li>
+		<% end %>
+    <% end %>
+  </ul>
+<% end %>

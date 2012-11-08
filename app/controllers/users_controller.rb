@@ -16,9 +16,9 @@ before_filter :admin_user, only: :destroy
   def create
   	@user = User.new(params[:user])
   	if @user.save
-  		flash[:success] = "Welcome to the Sample App!"
+  		flash[:success] = "Welcome to the Accountability Tracker!"
   		sign_in @user
-  		redirect_to @user
+  		redirect_to root_path
   	else
   		render 'new'
   	end

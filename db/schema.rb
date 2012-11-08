@@ -11,26 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121107135708) do
+ActiveRecord::Schema.define(:version => 20121108213219) do
 
   create_table "asks", :force => true do |t|
     t.string   "description"
-    t.integer  "category"
-    t.boolean  "public"
-    t.boolean  "done"
-    t.boolean  "followed_up"
-    t.integer  "helper"
+    t.string   "category"
+    t.boolean  "public",      :default => false
+    t.boolean  "done",        :default => false
+    t.boolean  "followed_up", :default => false
+    t.string   "helper"
     t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "contacts", :force => true do |t|
     t.string   "name"
-    t.boolean  "done"
+    t.boolean  "done",       :default => false
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   create_table "microposts", :force => true do |t|

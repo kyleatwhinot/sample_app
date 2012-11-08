@@ -1,0 +1,14 @@
+<% if current_user.asks.where("followed_up = ?", false).any? %>
+  <ul>
+    <% current_user.asks.where('followed_up = ?', false).where('done = ?', true).each do |a| %> 
+		  <%= form_for(a) do |f| %>
+  			<%= render 'shared/error_messages', object: f.object %>
+  			<li>
+  				<%= a.description %>
+  				<%= f.hidden_field :followed_up, :value=>true %>
+  				<%= f.submit "Follow up complete", class: "btn btn-small btn-link"%>
+  			</li>
+		  <% end %>
+    <% end %>
+  </ul>
+<% end %>

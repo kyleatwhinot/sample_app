@@ -1,0 +1,7 @@
+<p class="lead"><%= @ask.description %></p>
+<ul>
+	<% unless @ask.helper == ("" || nil) %><li><%= @ask.helper %></li><% end %>
+	<% unless @ask.category == ("" || nil) %><li><%= @ask.category %></li><% end %>
+</ul>
+ <hr/>
+ <%= link_to "Add another ASK", root_path %>

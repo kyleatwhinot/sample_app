@@ -1,0 +1,8 @@
+<ul>
+    <% Ask.where("public = ?", true).where("user_id != ?", current_user.id).limit(10).each do |a| %> 
+         <li> 
+          <%= a.description %> | 
+          <%= link_to "help", "mailto:#{a.user.email}" %>
+        </li>
+    <% end %>
+</ul>

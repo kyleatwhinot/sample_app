@@ -6,8 +6,8 @@ SampleApp::Application.routes.draw do
   end
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
-  resources :contacts, only: [:create]
-  resources :asks, only: [:new, :create]
+  resources :contacts
+  resources :asks
   resources :relationships, only: [:create, :destroy]
 
   match '/help',    to: 'static_pages#help'

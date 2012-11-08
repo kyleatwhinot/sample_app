@@ -1,0 +1,15 @@
+  	<p class="lead"><%= @ask.description %></p>
+    <% unless @ask.helper == ("" || nil) %><ul><li><%= @ask.helper %></li></ul><% end %>
+    <% outcomes = [ "Advice", "Introduction", "Support", "Money", "Don't know" ] %>
+    <em>"Expected outcome of the ASK?</em>
+    <ul>
+    <% outcomes.each do |o| %>
+        <li>
+            <%= form_for(@ask) do |f| %>
+                <%= render 'shared/error_messages', object: f.object %>
+                <%= f.hidden_field :category, :value=> o %>
+                <%= f.submit o, class: "btn btn-success" %>
+            <% end %>
+        </li>
+    <% end %>
+    </ul>
