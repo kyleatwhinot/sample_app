@@ -3,9 +3,12 @@
     <% current_user.asks.where('done IS ?', false).each do |a| %> 
 		  <%= form_for(a) do |f| %>
   			<%= render 'shared/error_messages', object: f.object %>
-  			<li>
-  				<%= a.description %>
-  				<%= f.hidden_field :done, :value=>true %>
+  			<li class="up">
+  				<span class="adescription"><%= a.description %></span>
+          <br/>
+          <span class="time-ago"><%= "Added #{time_ago_in_words(a.created_at)} ago." %></span><br/>
+  				<%= f.hidden_field :date_done, value: Date.today %>
+          <%= f.hidden_field :done, :value=>true %>
   				<%= f.submit "Mark as done", class: "btn btn-small btn-link"%>
   			</li>
 		  <% end %>

@@ -1,10 +1,12 @@
 class ContactsController < ApplicationController
+
   before_filter :signed_in_user, only: [:create, :destroy]
 
   def create
     @contact = current_user.contacts.build(params[:contact])
     @contact.save
     flash[:success] = "contact added"
+    reminder("15404211659", "#{@contact.name} was added to your list of contacts.")
     redirect_to root_path
   end
 
@@ -22,4 +24,5 @@ class ContactsController < ApplicationController
   def index
 
   end
+
 end

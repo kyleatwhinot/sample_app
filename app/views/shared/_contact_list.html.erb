@@ -3,10 +3,13 @@
     <% current_user.contacts.where('done = ?', false).each do |c| %> 
 		<%= form_for(c) do |f| %>
   			<%= render 'shared/error_messages', object: f.object %>
-  			<li>
-  				<%= c.name %>
+  			<li class="up" id=<%= c.id %> onClick="showDone(this.id)">
+  				<span class="cname"><%= c.name %></span>
+          <br/>
+          <span class="time-ago"><%= "Added #{time_ago_in_words(c.created_at)} ago." %></span><br/>
   				<%= f.hidden_field :done, :value=>true %>
-  				<%= f.submit "Mark as done", class: "btn btn-small btn-link"%>
+          <%= f.hidden_field :date_done, value: Date.today %>
+  				<%= f.submit "Mark as done", class: "btn btn-small btn-link" %>
   			</li>
 		<% end %>
     <% end %>

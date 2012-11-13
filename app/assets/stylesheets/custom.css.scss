@@ -75,6 +75,60 @@ p {
   line-height: 1.7em;
 }
 
+li.up {
+    text-align: left;
+    list-style-image: url(up-arrow.png);
+    .btn {
+    text-align: center;
+    margin-top: 13px;
+    }
+}
+
+li.profile {
+    text-align: left;
+    list-style-image: url(profile.png);
+    .btn {
+    text-align: center;
+    margin-top: 13px;
+    }
+}
+
+li.check {
+    text-align: left;
+    list-style-image: url(check.png);
+    .btn {
+    text-align: center;
+    margin-top: 13px;
+    }
+}
+
+li.rarrow {
+    text-align: left;
+    list-style-image: url(r-arrow.png);
+}
+
+.time-ago {
+    font-size: .75em;
+    font-style: italic;
+    color: $grayLight;
+}
+
+.cname {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: $grayDarker;
+}
+
+.btn-category {
+    width: 100px;
+}
+
+.adescription {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: $grayDarker;
+}
+
 /* header */
 
 #logo {

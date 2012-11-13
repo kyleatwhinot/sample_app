@@ -1,8 +1,9 @@
 <ul>
     <% Ask.where("public = ?", true).where("user_id != ?", current_user.id).limit(10).each do |a| %> 
-         <li> 
-          <%= a.description %> | 
-          <%= link_to "help", "mailto:#{a.user.email}" %>
+         <li class="rarrow"> 
+          <span class="adescription"><%= a.description %></span> | 
+          <%= link_to "help", "mailto:#{a.user.email}" %></br>
+          <span class="time-ago"><%= gravatar_for(a.user, size: 20) %>From <%= link_to a.user.name, a.user %> <%= time_ago_in_words(a.created_at) %> ago.</span></br></br>
         </li>
     <% end %>
 </ul>

@@ -11,26 +11,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121108213219) do
+ActiveRecord::Schema.define(:version => 20121112230935) do
 
   create_table "asks", :force => true do |t|
     t.string   "description"
     t.string   "category"
-    t.boolean  "public",      :default => false
-    t.boolean  "done",        :default => false
-    t.boolean  "followed_up", :default => false
+    t.boolean  "public",           :default => false
+    t.boolean  "done",             :default => false
+    t.boolean  "followed_up",      :default => false
     t.string   "helper"
     t.integer  "user_id"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.date     "date_done"
+    t.date     "date_followed_up"
   end
 
   create_table "contacts", :force => true do |t|
     t.string   "name"
-    t.boolean  "done",       :default => false
+    t.boolean  "done",             :default => false
     t.integer  "user_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.date     "date_done"
+    t.date     "date_followed_up"
   end
 
   create_table "microposts", :force => true do |t|
@@ -61,6 +65,9 @@ ActiveRecord::Schema.define(:version => 20121108213219) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.boolean  "admin",           :default => false
+    t.integer  "timezone",        :default => -5
+    t.boolean  "text_alerts",     :default => true
+    t.string   "phone_number"
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token", :unique => true
