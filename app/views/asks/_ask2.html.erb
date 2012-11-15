@@ -1,4 +1,4 @@
-<%= form_for(@ask) do |f| %>
+<%= form_for(@ask, remote: true) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
   	<p class = "lead"><%= @ask.description %></p>
@@ -8,6 +8,6 @@
     <em><%= f.label :public, "Make this ask public?" %></em>
     <%= f.check_box :public %>
   </div>
-  <%= f.submit "Skip", class: "btn btn-link" %>
+  <%= f.submit "Skip", class: "btn btn-small" %>
   <%= f.submit "Save", class: "btn btn-success" %>
 <% end %>

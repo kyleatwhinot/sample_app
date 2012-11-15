@@ -39,6 +39,10 @@ gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
 gem 'twilio-ruby'
 gem 'sinatra'
+gem 'chronic'
+gem 'mail'
+gem 'omniauth-facebook', '1.4.0'
+gem 'koala'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

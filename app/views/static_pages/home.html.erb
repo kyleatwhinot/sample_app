@@ -3,7 +3,7 @@
     <%= render 'shared/contact_title' %>
     <%= render 'shared/contact_text_long' if (current_user == nil || current_user.contacts.count == 0) %>
     <% if signed_in? %>
-      <%= render 'shared/contact_list' %> <hr/>
+      <%= render 'shared/contact_list' %><hr> 
       <%= render 'shared/contact_form' %>
     <% else %>
       <p><%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %></p>
@@ -14,8 +14,10 @@
     <%= render 'shared/ask_text' %>
     <%= render 'shared/ask_text_long' if (current_user == nil || current_user.asks.count == 0) %>
     <% if signed_in? %>
+    <div id="ask">
       <%= render 'asks/ask_list' %> <hr/>
       <%= render 'asks/ask1' %>
+      </div>
     <% end %>
   </div>
   <div class="span3">

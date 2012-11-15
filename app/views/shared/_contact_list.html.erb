@@ -1,17 +1,29 @@
 <% if current_user.contacts.any? %>
-  <ul>
-    <% current_user.contacts.where('done = ?', false).each do |c| %> 
-		<%= form_for(c) do |f| %>
-  			<%= render 'shared/error_messages', object: f.object %>
-  			<li class="up" id=<%= c.id %> onClick="showDone(this.id)">
-  				<span class="cname"><%= c.name %></span>
-          <br/>
-          <span class="time-ago"><%= "Added #{time_ago_in_words(c.created_at)} ago." %></span><br/>
-  				<%= f.hidden_field :done, :value=>true %>
-          <%= f.hidden_field :date_done, value: Date.today %>
-  				<%= f.submit "Mark as done", class: "btn btn-small btn-link" %>
-  			</li>
-		<% end %>
+  <ul id="list">
+    <% current_user.contacts.where('done = ?', false).order("due_at ASC").each do |c| %> 
+      <li class="up" id="<%= c.id %>">
+            <span class="cname <%= "overdue" if overdue?(c) %>"><%= c.name %></span>
+            <br>
+            <span class="time-ago"><%= "Added #{time_ago_in_words(c.created_at)} ago." %></span><br>
+            <% unless c.due_at == nil %>
+              <span class="time-ago due_<%= c.id %>">
+                  <%= "Target done by #{c.due_at.strftime('%b %e')}." %> <a href="#" id="<%= c.id %>">update</a><br>
+              </span>
+              <div id="edit_due_at_<%= c.id %>" class="hidden">
+                <%= form_for(c) do |f| %>
+                <%= f.text_field :due_at, value: "#{c.due_at.strftime('%b %e')}", class: "edit_due_date" %><%= f.submit "Update", class: "btn btn-small due_btn" %>
+              <% end %></div>
+            <% else %>
+              <span class="time-ago">
+                  <%= link_to("add due date", '#') %><br>
+              </span>
+            <% end %>
+          <%= form_for(c) do |f| %>  
+    				<%= f.hidden_field :done, :value=>true %>
+            <%= f.hidden_field :date_done, value: Date.today %>
+    				<%= f.submit "Mark as done", class: "btn btn-small hidden done_btn" %>
+        <% end %>  
+      </li>
     <% end %>
   </ul>
 <% end %>

@@ -1,4 +1,5 @@
 class StaticPagesController < ApplicationController
+  include ContactsHelper
 
   def home
     if signed_in?

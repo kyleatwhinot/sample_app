@@ -1,7 +1,11 @@
+<% def_msg = 	["email John this week",
+				"call all Q2 clients next week", 
+				"meet Rob for coffee on Dec 1", 
+				"thank workshop attendees by Monday"] %>
 <%= form_for(@contact) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
-    <%= f.text_field :name, placeholder: "contact name..." %>
+    <%= f.text_field :name, placeholder: def_msg.shuffle[0] %>
   </div>  
   <%= f.submit "Add to contact list", class: "btn btn-primary btn-small" %>
 <% end %>

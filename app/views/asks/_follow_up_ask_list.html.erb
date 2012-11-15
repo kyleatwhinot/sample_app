@@ -4,7 +4,7 @@
 		  <%= form_for(a) do |f| %>
   			<%= render 'shared/error_messages', object: f.object %>
   			<li class="up">
-  				<span class="adescription"><%= a.description %></span></br>
+  				<span class="adescription"><%= a.description %></span><br>
           <span class="time-ago">Done <%= time_ago_in_words(a.date_done) unless a.date_done == nil %> ago.</span>
   				<%= f.hidden_field :date_followed_up, value: Date.today %>
           <%= f.hidden_field :followed_up, :value=>true %>

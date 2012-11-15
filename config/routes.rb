@@ -1,4 +1,6 @@
 SampleApp::Application.routes.draw do
+  resources :groups
+
   resources :users do
     member do
       get :following, :followers
@@ -9,6 +11,7 @@ SampleApp::Application.routes.draw do
   resources :contacts
   resources :asks
   resources :relationships, only: [:create, :destroy]
+  resources :memberships
 
   match '/help',    to: 'static_pages#help'
   match '/about',   to: 'static_pages#about'
@@ -17,6 +20,9 @@ SampleApp::Application.routes.draw do
   match '/signin',  to: 'sessions#new'
   # match '/edit_profile', to: 'users#edit'
   match '/signout', to: 'sessions#destroy', via: :delete
+  match 'auth/:provider/callback', to: 'sessions#create'
+  match 'auth/failure', to: redirect('/')
+  match 'signout', to: 'sessions#destroy', as: 'signout'
 
 
   # The priority is based upon order of creation:

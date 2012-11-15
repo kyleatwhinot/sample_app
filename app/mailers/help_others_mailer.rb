@@ -6,16 +6,8 @@ class HelpOthersMailer < ActionMailer::Base
   #
   #   en.help_others_mailer.i_can_help.subject
   #
-  def i_can_help(user, ask, helper)
-    @user = user
-    @helper = helper
-    @ask = ask
 
-    mail to: @user, subject: "#{@helper} wants to help re: #{@ask}"
-    mail cc: @helper
-  end
   def i_can_help2
-
     mail to: "kyle@whinot.com", subject: "Test email"
   end
 end

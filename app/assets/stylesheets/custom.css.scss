@@ -78,9 +78,11 @@ p {
 li.up {
     text-align: left;
     list-style-image: url(up-arrow.png);
-    .btn {
+    text-indent: -5px;
+    .done_btn {
     text-align: center;
-    margin-top: 13px;
+    margin-top: 5px;
+    margin-left: 25%;
     }
 }
 
@@ -127,6 +129,25 @@ li.rarrow {
     font-size: 1.2em;
     font-weight: bold;
     color: $grayDarker;
+}
+
+.hidden {
+    display: none;
+}
+
+.overdue {
+    background-color:#ffd6d6;
+    @include box_sizing;
+}
+
+.edit_due_date {
+    width: 100px;
+    margin-right: 10px;
+    margin-left: 3px;
+}
+
+.due_btn {
+    margin-bottom: 8px;
 }
 
 /* header */

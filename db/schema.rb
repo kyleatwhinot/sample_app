@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121112230935) do
+ActiveRecord::Schema.define(:version => 20121115011357) do
 
   create_table "asks", :force => true do |t|
     t.string   "description"
@@ -35,7 +35,25 @@ ActiveRecord::Schema.define(:version => 20121112230935) do
     t.datetime "updated_at",                          :null => false
     t.date     "date_done"
     t.date     "date_followed_up"
+    t.datetime "due_at"
   end
+
+  create_table "groups", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "memberships", ["group_id"], :name => "index_memberships_on_group_id"
+  add_index "memberships", ["user_id", "group_id"], :name => "index_memberships_on_user_id_and_group_id", :unique => true
+  add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
   create_table "microposts", :force => true do |t|
     t.string   "content"
@@ -60,14 +78,20 @@ ActiveRecord::Schema.define(:version => 20121112230935) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.string   "password_digest"
     t.string   "remember_token"
-    t.boolean  "admin",           :default => false
-    t.integer  "timezone",        :default => -5
-    t.boolean  "text_alerts",     :default => true
+    t.boolean  "admin",            :default => false
+    t.integer  "timezone",         :default => -5
+    t.boolean  "text_alerts",      :default => true
     t.string   "phone_number"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "oauth_token"
+    t.datetime "oauth_expires_at"
+    t.string   "location"
+    t.string   "image_url"
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token", :unique => true

@@ -6,10 +6,10 @@ module StaticPagesHelper
   	end
 
   	def today
-  		return DateTime.now.strftime('%A').upcase
+  		return DateTime.now.strftime('%^A')
   	end
 
   	def dft(dft)
-  		DateTime.now.next_day(dft).strftime('%A').upcase
+  		DateTime.now.next_day(dft).strftime('%^A')
   	end
 end
