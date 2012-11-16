@@ -1,67 +1,76 @@
 class AsksController < ApplicationController
-before_filter :check_params
 
-  def check_params
-    if params[:category] != nil
-      update_category
-    end
+  def new
+    @ask = current_user.asks.build(params[:ask])
+    @ask.save!
   end
 
   def new
     @ask = current_user.asks.build(params[:ask])
-    @ask.save
-    flash[:success] = "ask new"
+    @ask.save!
   end
 
-  def create
-  	@ask = current_user.asks.build(params[:ask])
-  	@ask.save
-  	flash[:success] = "ask created"
-  	respond_to do |format|
+  def edit
+    @ask = current_user.asks.find(params[:id])
+    next_step = @ask.check_change(params[:ask])
+    if next_step == "ask2"
+      @ask.update_attributes!(params[:ask])
+      ask2
+      flash[:notice] = "Description added"
+    elsif next_step == "ask3"
+      @ask.update_attributes!(params[:ask])
+      ask3
+      flash[:notice] = "Helper and public added"
+    elsif next_step == "ask4"
+      @ask.update_attributes!(params[:ask])
+      ask4
+      flash[:notice] = "Category added"
+    else
+      @ask.update_attributes!(params[:ask])
+      flash[:notice] = "Not sure what to do"
+    end
+  end
+
+  def update
+    @ask = current_user.asks.find(params[:id])
+    next_step = @ask.check_change(params[:ask])
+    if next_step == "ask2"
+      @ask.update_attributes!(params[:ask])
+      ask2
+      flash[:notice] = "Description added"
+    elsif next_step == "ask3"
+      @ask.update_attributes!(params[:ask])
+      ask3
+      flash[:notice] = "Helper and public added"
+    elsif next_step == "ask4"
+      @ask.update_attributes!(params[:ask])
+      ask4
+      flash[:notice] = "Category added"
+    else
+      @ask.update_attributes!(params[:ask])
+      flash[:notice] = "Not sure what to do"
+    end
+  end
+
+  def ask2
+    respond_to do |format|
       format.html { redirect_to edit_ask_path(@ask) }
       format.js
     end
   end
 
-  def edit
-  	@ask = current_user.asks.find(params[:id])
-  	@ask.update_attributes(params[:ask])
-  	if @ask.save
-  		flash[:success] = "ask edited"
-  	end
-  end
-
-  def update
-  	@ask = current_user.asks.find(params[:id])
-  	if @ask.update_attributes(params[:ask])
-  		flash[:success] = "ask updated!"
-      respond_to do |format|
-        format.html { redirect_to edit_ask_path(@ask) }
-        format.js
-      end
-  	else
-  		flash[:error] = "something is wrong with the ask update"
-  		redirect_to root_path
-  	end
-  end
-
-  def update_category
-    @ask = current_user.asks.find(params[:id])
-    if @ask.update_attributes(params[:ask])
-      flash[:success] = "Category updated!"
-      respond_to do |format|
-        format.html { redirect_to edit_ask_path(@ask) }
-        format.js
-      end
-    else
-      flash[:error] = "something is wrong with the ask update"
-      redirect_to root_path
+  def ask3
+    respond_to do |format|
+      format.html { redirect_to edit_ask_path(@ask) }
+      format.js
     end
   end
 
-  def update_category(category)
-  	@ask = current_user.asks.find(params[:id])
-  	@ask.update_attributes(params[:category])
+  def ask4
+    respond_to do |format|
+      format.html { redirect_to edit_ask_path(@ask) }
+      format.js
+    end
   end
 
 end

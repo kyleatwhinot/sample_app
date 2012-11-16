@@ -16,6 +16,12 @@ $(document).ready(function () {
 		$(e.currentTarget).find("input.done_btn").toggleClass("hidden");
 	})
 
+	$("#fulist") //listen for clicks on the li tag
+		.on("click", "li", function(e) {
+			//show "mark as done" button
+		$(e.currentTarget).find("input.fu_btn").toggleClass("hidden");
+	})
+
 	$(function() {
    		$('.alert').delay(500).fadeIn('normal', function() {
       		$(this).delay(2500).fadeOut('slow');

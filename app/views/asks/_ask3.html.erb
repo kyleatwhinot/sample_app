@@ -3,9 +3,9 @@
     <% outcomes = [ "Advice", "Introduction", "Support", "Money", "Don't know" ] %>
     <em>"Expected outcome of the ASK?</em>
     <% outcomes.each do |o| %>
-            <%= form_for(@ask) do |f| %>
+            <%= form_for(@ask, remote: true) do |f| %>
                 <%= render 'shared/error_messages', object: f.object %>
                 <%= f.hidden_field :category, :value=> o %>
-                <%= f.submit o, class: "btn btn-success btn-category" %>
+                <%= f.submit o.to_s, class: "btn btn-success btn-category" %>
             <% end %>
     <% end %>

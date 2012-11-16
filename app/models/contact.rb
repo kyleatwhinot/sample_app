@@ -15,4 +15,9 @@ class Contact < ActiveRecord::Base
     self.due_at = Chronic::parse(self.due_at_before_type_cast) if attribute_present?("due_at")
   end
 
+  def overdue(contact)
+    @contact = contact
+    @contact.due_at < Date.today
+  end
+
 end

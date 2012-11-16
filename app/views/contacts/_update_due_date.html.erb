@@ -1,0 +1,5 @@
+<div id="edit_due_at_<%= c.id %>" class="hidden">
+	<%= form_for(c) do |f| %>
+		<%= f.text_field :due_at, value: "#{c.due_at.strftime('%b %e')}", class: "edit_due_date" %><%= f.submit "Update", class: "btn btn-small due_btn" %>
+	<% end %>
+</div>
