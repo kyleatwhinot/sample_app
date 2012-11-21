@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115011357) do
+ActiveRecord::Schema.define(:version => 20121121125547) do
 
   create_table "asks", :force => true do |t|
     t.string   "description"
@@ -54,6 +54,13 @@ ActiveRecord::Schema.define(:version => 20121115011357) do
   add_index "memberships", ["group_id"], :name => "index_memberships_on_group_id"
   add_index "memberships", ["user_id", "group_id"], :name => "index_memberships_on_user_id_and_group_id", :unique => true
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
+
+  create_table "messages", :force => true do |t|
+    t.string   "body"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "ask_id"
+  end
 
   create_table "microposts", :force => true do |t|
     t.string   "content"

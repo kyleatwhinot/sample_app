@@ -1,0 +1,9 @@
+<p class="lead"><%= @ask.description %></p>
+<p>Asked by <%= link_to(@ask.user.name, user_path(@ask.user.id)) + " " + time_ago_in_words(@ask.created_at) + " ago." %></p>
+<%= form_for([@ask, @message], :url => ask_message_url) do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+	<%= f.label :body, "How can you help?" %>
+	<%= f.text_area :body, class:"help" %>
+
+	<%= f.submit "send message", class:"btn btn-small btn-primary" %>
+<% end %>

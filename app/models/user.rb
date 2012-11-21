@@ -31,6 +31,9 @@ class User < ActiveRecord::Base
   #validates :password, length: { minimum: 6 }
   #validates :password_confirmation, presence: true
 
+  # define this but to do it correctly need to setup a counter cache http://railscasts.com/episodes/23-counter-cache-column
+  #scope :active_contacts, where(self.arel_table[:contacts_count].gt(0))
+
   def following?(other_user)
     relationships.find_by_followed_id(other_user.id)
   end
@@ -70,6 +73,53 @@ class User < ActiveRecord::Base
 
   def member?(group)
     memberships.find_by_group_id(group.id)
+  end
+
+  def last_contact_done_days
+      date_array = self.contacts.find(:all, :select => "date_done").to_a
+      most_recent = date_array.max
+      last_done = Date.today - most_recent[:date_done]
+      return last_done
+  end
+
+  def last_contact_done_date
+      self.contacts.order('date_done DESC').first.try(:date_done)
+  end
+
+  def last_ask_done_date
+      self.asks.order('date_done DESC').first.try(:date_done)
+  end
+
+  def last_contact_fu_date
+      self.contacts.order('date_followed_up DESC').first.try(:date_followed_up)
+  end
+
+  def last_ask_fu_date
+      self.asks.order('date_followed_up DESC').first.try(:date_followed_up)
+  end
+
+  def last_activity_date
+    ask_activity = self.asks.order('updated_at DESC').first.try(:updated_at)
+    contact_activity = self.contacts.order('updated_at DESC').first.try(:updated_at)
+    return [ask_activity, contact_activity].max
+  end
+
+  def ask_count(weeks)    
+    wks = weeks.to_i
+    self.asks.where(done: true, updated_at: (Date.today - wks.weeks)..Date.today).count
+  end
+
+  def contacts_count(weeks)    
+    wks = weeks.to_i
+    self.contacts.where(done: true, updated_at: (Date.today - wks.weeks)..Date.today).count
+  end
+
+  def top_contacts(count)
+    self.contacts.where(done: false).order("due_at ASC").limit(count)
+  end
+
+  def top_asks(count)
+    self.asks.where(done: false).order("created_at ASC").limit(count)
   end
 
   private

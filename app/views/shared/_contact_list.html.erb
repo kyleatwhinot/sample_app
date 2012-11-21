@@ -2,7 +2,7 @@
   <ul id="list">
     <% current_user.contacts.where('done = ?', false).order("due_at ASC").each do |c| %> 
       <li class="up" id="<%= c.id %>">
-            <span class="cname <%= "overdue" if overdue(c) %>"><%= c.name %></span>
+            <span class="cname <%= "overdue" if c.overdue %>"><%= c.name %></span>
             <br>
             <span class="time-ago"><%= "Added #{time_ago_in_words(c.created_at)} ago." %></span><br>
             <% unless c.due_at == nil %>
@@ -17,10 +17,10 @@
                 </div>
             <% else %>
               <span class="time-ago">
-                <a href="#" id="<%= c.id %>">add due date</a>
+                <a href="#" id="<%= c.id %>", class="tbd">add due date</a>
                 <div id="edit_due_at_<%= c.id %>" class="hidden">
                   <%= form_for(c) do |f| %>
-                    <%= f.text_field :due_at, class: "edit_due_date" %>
+                    <%= f.text_field :due_at, class: "edit_due_date", placeholder:"#{(Date.today + 5).strftime('%b %d')}" %>
                     <%= f.submit "Add date", class: "btn btn-small due_btn" %>
                   <% end %>
                 </div>

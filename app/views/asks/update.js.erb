@@ -1,2 +1,13 @@
-$("div#ask").html("<%= escape_javascript(render('asks/ask3')) %>")
-$("div#debug").html("<%= escape_javascript(render('layouts/debug')) %>")
+
+alert('here');
+    
+	$("#ask3-btn").click(function(e){
+		debugger;
+		$("div#ask").html("<%= escape_javascript(render('asks/ask4')) %>")
+	});
+
+	$("#ask-done").click(function(e){
+		debugger;
+		$("div#ask").html("<%= escape_javascript(render('asks/ask_list')) %>")
+	});
+

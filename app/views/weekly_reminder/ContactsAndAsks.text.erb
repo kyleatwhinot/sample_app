@@ -1,0 +1,15 @@
+Hi <%= @name %>,
+
+Just a reminder that you want to contact one of these people this week:
+<% @top3_contacts.each do |c| %>
+	<%= c %>
+<% end %>
+
+You want to make ASKs about:
+<% @top3_asks.each do |a| %>
+	<%= a %>
+<% end %>
+
+See all of your planned contacts and ASKs. <%= root_url %>
+
+Need inspiration? Did you know that Stacy's Pita Chips started out of a cart? http://www.effectuation.org/article/identity-chip-story-stacys-pita-chips

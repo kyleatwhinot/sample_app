@@ -1,16 +1,26 @@
 <% if current_user.asks.any? %>
-  <ul>
-    <% current_user.asks.where('done IS ?', false).each do |a| %> 
-		  <%= form_for(a) do |f| %>
+  <ul id="ask-list-items">
+    <% current_user.asks.where(done: false).each do |a| %> 
+		  <%= form_for(a, remote: true) do |f| %>
   			<%= render 'shared/error_messages', object: f.object %>
-  			<li class="up">
-  				<span class="adescription"><%= a.description %></span>
-          <br>
-          <span class="time-ago"><%= "Added #{time_ago_in_words(a.created_at)} ago." %></span><br>
-  				<%= f.hidden_field :date_done, value: Date.today %>
-          <%= f.hidden_field :done, :value=>true %>
-  				<%= f.submit "Mark as done", class: "btn btn-small btn-link"%>
-  			</li>
+  			<li class="up" id="a-<%= a.id %>">
+  				<span class="cname">
+            <%= a.description %>
+          </span>
+        </li>
+        <li class="profile">
+          <%= a.helper %>
+        </li>
+        <li class="check">
+          <%= a.category %>
+        </li>
+          <span class="time-ago">
+            <%= "Added #{time_ago_in_words(a.created_at)} ago." %>
+          </span>
+        <br>
+  		<%= f.hidden_field :date_done, value: Date.today %>
+      <%= f.hidden_field :done, :value=>true %>
+  		<%= f.submit "Mark as done", class: "btn btn-small hidden done_btn", id: "a-#{a.id}-done" %>
 		  <% end %>
     <% end %>
   </ul>

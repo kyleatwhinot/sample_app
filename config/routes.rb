@@ -9,7 +9,9 @@ SampleApp::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
   resources :contacts
-  resources :asks
+  resources :asks do
+    resources :messages, only: [:new, :create]
+  end
   resources :relationships, only: [:create, :destroy]
   resources :memberships
 

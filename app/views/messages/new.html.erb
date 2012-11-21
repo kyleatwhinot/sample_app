@@ -1,0 +1,23 @@
+<div class="row">
+<div class="span7">
+	<h3><%= @message.ask.description %></h3><br>
+	<p><%= gravatar_for(@message.ask.user, size: 40) %> 
+		Asked by <%= link_to(@message.ask.user.name, user_path(@message.ask.user)) %> 
+		<%= time_ago_in_words(@message.ask.created_at) %> ago.</p><br>
+
+	<%= form_for(@message, url: ask_messages_path) do |f| %>
+		<%= render 'shared/error_messages', object: f.object %>
+		<%= f.label :body, "Let #{@message.ask.user.name} know how you can help." %>
+		<%= f.text_area :body, placeholder: "how can you help?", id:"ask-message" %>
+
+		<%= f.submit "send message", class: "btn btn-primary" %>
+	<% end %>
+</div>
+<div class="span3 offset1">
+	<h4>Other Asks from <%= @message.ask.user.name %></h4><hr>
+	<% @message.ask.user.asks.each do |a| %>
+	<%= link_to(a.description, ask_messages_path(a)) %>
+	<hr>
+	<% end %>
+</div>
+</div>

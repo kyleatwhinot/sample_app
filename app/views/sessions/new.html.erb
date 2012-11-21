@@ -1,7 +1,12 @@
 <% provide(:title, 'Sign in') %>
 <h1>Sign in</h1>
-
-<div class="row">
+  <% if current_user %>
+    Signed in as <strong><%= current_user.name %></strong>!
+    <%= link_to "Sign out", signout_path, id: "sign_out" %>
+  <% else %>
+    <h1><%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %></h1>
+  <% end %>
+<div class="row hidden">
   <div class="span6 offset3">
     <%= form_for(:session, url: sessions_path) do |f| %>
 

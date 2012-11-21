@@ -1,13 +1,11 @@
 <%= form_for(@ask, remote: true) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
-  	<p class = "lead"><%= @ask.description %></p>
-    <em><%= f.label :helper, "Who do you want to ASK?" %></em>
+  	<ul><li class="up"><p class="cname"><%= @ask.description %></p></li></ul>
+    <%= f.label :helper, "Who do you want to ASK?" %>
     <%= f.text_field :helper, placeholder: "name" %>
     
-    <em><%= f.label :public, "Make this ask public?" %></em>
-    <%= f.check_box :public %>
+    <%= f.check_box :public %>	<span class"cname">Make this ask public?</span><br><br>
   </div>
-  <%= f.submit "Skip", class: "btn btn-small" %>
-  <%= f.submit "Save", class: "btn btn-success" %>
+  <%= f.submit "Save", class: "btn btn-primary btn-small", id: "ask2-btn" %>
 <% end %>

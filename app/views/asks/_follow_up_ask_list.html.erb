@@ -8,7 +8,7 @@
           <span class="time-ago">Done <%= time_ago_in_words(a.date_done) unless a.date_done == nil %> ago.</span><br>
   				<%= f.hidden_field :date_followed_up, value: Date.today %>
           <%= f.hidden_field :followed_up, :value=>true %>
-  				<%= f.submit "Follow up done", class: "btn btn-small hidden fu_btn"%>
+  				<%= f.submit "Follow up done", class: "btn btn-small hidden done_btn"%>
   			</li>
 		  <% end %>
     <% end %>

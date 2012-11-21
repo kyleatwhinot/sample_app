@@ -1,0 +1,11 @@
+create
+<%= @message.ask.description %>
+<%= "asked by " + @message.ask.user.name %>
+
+<%= form_for(@message) do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+	<%= f.label :body %>
+	<%= f.text_field :body, placeholder: "how can you help?" %>
+
+	<%= f.submit "send message", class: "btn btn-primary" %>
+<% end %>

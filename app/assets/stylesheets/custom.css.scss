@@ -78,7 +78,6 @@ p {
 li.up {
     text-align: left;
     list-style-image: url(up-arrow.png);
-    text-indent: -5px;
     .done_btn {
     text-align: center;
     margin-top: 5px;
@@ -89,6 +88,8 @@ li.up {
 li.profile {
     text-align: left;
     list-style-image: url(profile.png);
+    margin-left: 10%;
+    margin-top: 2%;
     .btn {
     text-align: center;
     margin-top: 13px;
@@ -98,6 +99,8 @@ li.profile {
 li.check {
     text-align: left;
     list-style-image: url(check.png);
+    margin-left: 10%;
+    margin-top: 2%;
     .btn {
     text-align: center;
     margin-top: 13px;
@@ -140,6 +143,10 @@ li.rarrow {
     @include box_sizing;
 }
 
+.tbd {
+  background-color:#F3FF47;
+}
+
 .edit_due_date {
     width: 100px;
     margin-right: 10px;
@@ -148,6 +155,18 @@ li.rarrow {
 
 .due_btn {
     margin-bottom: 8px;
+}
+
+.done_btn {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+#ask3-btn {
+    width: 35%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 10%;
 }
 
 /* header */
@@ -286,6 +305,10 @@ input, textarea, select, .uneditable-input {
 .field_with_errors {
   @extend .control-group;
   @extend .error;
+ }
+
+ textarea#ask-message {
+  height: 100px !important;
  }
 
 /* users index */

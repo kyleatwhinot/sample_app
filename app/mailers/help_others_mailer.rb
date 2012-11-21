@@ -1,13 +1,12 @@
 class HelpOthersMailer < ActionMailer::Base
   default from: "nice-work@whinot.com"
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.help_others_mailer.i_can_help.subject
-  #
+  def i_can_help(sender, ask, message, asker)
+    @helper_name = sender.name
+    @ask_description = ask.description
+    @message = message.body
+    @sender_url = user_url(sender)
 
-  def i_can_help2
-    mail to: "kyle@whinot.com", subject: "Test email"
-  end
+    mail to: asker.email, cc: sender.email, subject: "#{ask.description}: #{sender.name} wants to help."
+  end  
 end

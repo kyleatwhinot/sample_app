@@ -1,0 +1,19 @@
+<p>Hi <%= @name %>,</p>
+
+<h3>Just a reminder that you want to contact one of these people this week:</h3>
+<ul>
+<% @top3_contacts.each do |c| %>
+	<li><%= c %></li>
+<% end %>
+</ul>
+
+<h3>You want to make ASKs about:</h3>
+<ul>
+<% @top3_asks.each do |a| %>
+	<li><%= a %></li>
+<% end %>
+</ul>
+
+<p>See all of your <%= link_to "planned contacts and ASKs", root_url %>.</p>
+
+<p>Need inspiration? Did you know that <%= link_to "Stacy's Pita Chips started out of a cart", "http://www.effectuation.org/article/identity-chip-story-stacys-pita-chips" %>?</p>

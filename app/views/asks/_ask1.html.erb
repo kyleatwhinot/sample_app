@@ -1,7 +1,65 @@
-	<%= form_for(@ask, remote: true) do |f| %>
-	  <%= render 'shared/error_messages', object: f.object %>
-	  <div class="field">
-	    <%= f.text_field :description, placeholder: "what do you need..." %>
-	  </div>
-	  <%= f.submit class: "btn btn-primary btn-small" %>
+<% outcomes = [ "Advice", "Introduction", "Help", "Money", "Not Sure" ] %>
+<%= form_for(@ask, remote: true) do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+	<div class="field ask1">
+		<%= f.text_field :description, placeholder: "what do you need...", id:"ask-desc-input" %>
+		<%= button_tag("Add an Ask", type: "button", class: "btn btn-primary btn-small", id: "ask1-btn") %>
+	</div>
+  	<div class="field ask2 hidden">
+  	<ul>
+  		<li class="up", id="ask-description"><p class="cname"></p></li></ul>
+    	<%= f.label :helper, "Who do you want to ASK?" %>
+    	<%= f.text_field :helper, placeholder: "name", id:"ask-contact-input" %>
+    
+    	<%= f.check_box :public %>	<span class"cname">Make this ask public?</span><br><br>
+  		<%= button_tag("Skip", type: "button", class: "btn btn-small", id:"ask2-skip-btn") %>
+  		<%= button_tag("Save", type: "button", class: "btn btn-primary btn-small", id:"ask2-btn") %>
+  	</div>
+  	<div class="field ask3 hidden">
+  	<ul>
+  		<li class="up", id="ask-description"><p class="cname"></p></li>
+		<li class="profile", id="ask-contact"></li>
+	</ul>
+	<%= f.label :category, "Expected outcome of the ASK?" %>
+	<% outcomes.each do |o| %>
+        <%= f.hidden_field :category, value: o %>
+        <%= f.submit "#{o.to_s}", class: "btn btn-small btn-primary btn-category", id:"ask3-btn" %>
 	<% end %>
+	</div>
+<% end %>
+
+<script>
+	$("#ask1-btn").click(function(e){
+		findDescription();
+		$("div#ask-list").toggleClass("hidden");
+		$("div.ask1").toggleClass("hidden");
+		$("div.ask2").toggleClass("hidden");
+		e.preventDefault();
+	});
+
+	$("#ask2-btn").click(function(e){
+		askStep3();
+	});
+
+	$("#ask2-skip-btn").click(function(e){
+		askStep3();
+	});
+
+	function askStep3(){
+		findContact();
+		$("div.ask2").toggleClass("hidden");
+		$("div.ask3").toggleClass("hidden");
+	};
+
+	function findDescription(){
+		var ask_description = document.getElementById("ask-desc-input").value;
+		$("li#ask-description p.cname").text(ask_description);
+	};
+
+	function findContact(){
+		var ask_contact = document.getElementById("ask-contact-input").value;
+		$("li#ask-contact").text(ask_contact);
+	};
+
+</script>
+
