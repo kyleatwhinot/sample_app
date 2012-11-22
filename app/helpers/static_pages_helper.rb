@@ -36,7 +36,7 @@ module StaticPagesHelper
 
     def contact_overdue?(user_id)
       @user = User.find_by_id(user_id)
-      return true if (Date.today - (@user.last_contact_done_date ||= Date.tomorrow)) > 6
+      return true if (Date.today - (@user.last_contact_done_date || Date.tomorrow)) > 6
     end
 
     def ask_overdue?(user_id)
