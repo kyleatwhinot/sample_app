@@ -11,7 +11,7 @@
 
 class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation
-  #has_secure_password
+  has_secure_password
   has_many :microposts, dependent: :destroy
   has_many :contacts, dependent: :destroy
   has_many :asks, dependent: :destroy
@@ -21,15 +21,15 @@ class User < ActiveRecord::Base
   has_many :followed_users, through: :relationships, source: :followed
   has_many :memberships, dependent: :destroy
 
-  #before_save { |user| user.email = email.downcase }
+  before_save { |user| user.email = email.downcase }
   before_save { create_remember_token }
 
   validates :name, presence: true, length: { maximum: 50 }
-  #VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  #validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
   									#uniqueness: { case_sensitive: false, message: "is already registered. Please sign in." }
-  #validates :password, length: { minimum: 6 }
-  #validates :password_confirmation, presence: true
+  validates :password, length: { minimum: 6 }
+  validates :password_confirmation, presence: true
 
   # define this but to do it correctly need to setup a counter cache http://railscasts.com/episodes/23-counter-cache-column
   #scope :active_contacts, where(self.arel_table[:contacts_count].gt(0))
