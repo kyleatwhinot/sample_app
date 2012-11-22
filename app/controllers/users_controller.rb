@@ -16,7 +16,7 @@ before_filter :admin_user, only: :destroy
   def create
   	@user = User.new(params[:user])
   	if @user.save
-      UserMailer.registration_confirmation(@user).deliver
+      #UserMailer.registration_confirmation(@user).deliver
   		flash[:success] = "Welcome to the Accountability Tracker!"
   		sign_in @user
   		redirect_to root_path
