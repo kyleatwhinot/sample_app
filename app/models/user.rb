@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
-  									#uniqueness: { case_sensitive: false, message: "is already registered. Please sign in." }
+  									uniqueness: { case_sensitive: false, message: "is already registered. Please sign in." }
   validates :password, length: { minimum: 6 }
   validates :password_confirmation, presence: true
 
@@ -50,6 +50,7 @@ class User < ActiveRecord::Base
     Micropost.from_users_followed_by(self)
   end
 
+=begin
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
       user.provider = auth.provider
@@ -62,6 +63,7 @@ class User < ActiveRecord::Base
       user.save!
     end
   end
+=end
 
   def join!(group)
     memberships.create!(group_id: group.id)
