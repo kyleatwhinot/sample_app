@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   has_many :followed_users, through: :relationships, source: :followed
   has_many :memberships, dependent: :destroy
 
-  before_save { |user| user.email = email.downcase }
+  #before_save { |user| user.email = email.downcase }
   before_save { create_remember_token }
 
   validates :name, presence: true, length: { maximum: 50 }
