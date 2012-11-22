@@ -8,5 +8,5 @@ class HelpOthersMailer < ActionMailer::Base
     @sender_url = user_url(sender)
 
     mail to: asker.email, cc: sender.email, subject: "#{ask.description}: #{sender.name} wants to help."
-  end  
+  end
 end
