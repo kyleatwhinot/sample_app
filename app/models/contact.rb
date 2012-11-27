@@ -7,6 +7,8 @@ class Contact < ActiveRecord::Base
   has_many :outcomes
   validates :name, presence: true
   #default_scope order: 'contacts.created_at ASC'
+  scope :not_done, where(done: false)
+
 
   def parse_due_date
     self.due_at = Chronic::parse(self.name_before_type_cast) if attribute_present?("name")

@@ -1,7 +1,7 @@
 <% if current_user.contacts.any? %>
   <ul id="list">
-    <% current_user.contacts.where('done = ?', false).order("due_at ASC").each do |c| %> 
-      <li class="up" id="<%= c.id %>">
+    <% current_user.contacts.not_done.order("due_at ASC").each do |c| %> 
+      <li class="up" id="<%= c.id.to_s %>">
             <span class="cname <%= "overdue" if c.overdue %>"><%= c.name %></span>
             <br>
             <span class="time-ago"><%= "Added #{time_ago_in_words(c.created_at)} ago." %></span><br>
