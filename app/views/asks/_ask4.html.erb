@@ -5,16 +5,5 @@
 	<li class="check"><%= @ask.category %></li>
 </ul>
 <hr>
-<%= link_to("Add another ASK", root_path, id:"add-ask") %>
+<%= link_to "Add another Ask", root_path %>
 </div>
-
-<script>
-	$("a#add-ask").click( function(e){
-		$("div#ask-list").html("<%= escape_javascript(render('asks/ask_list')) %>");
-		$("div#ask-list").toggleClass("hidden");
-		$("div#ask-form").html("<%= escape_javascript(render('asks/ask1')) %>"));
-		$("div.ask1").toggleClass("hidden");
-		$("div.ask4").toggleClass("hidden");
-		e.preventDefault();
-	});
-</script>

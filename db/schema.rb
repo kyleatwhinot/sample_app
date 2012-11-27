@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121121125547) do
+ActiveRecord::Schema.define(:version => 20121126170638) do
 
   create_table "asks", :force => true do |t|
     t.string   "description"
@@ -71,6 +71,30 @@ ActiveRecord::Schema.define(:version => 20121121125547) do
 
   add_index "microposts", ["user_id", "created_at"], :name => "index_microposts_on_user_id_and_created_at"
 
+  create_table "outcomes", :force => true do |t|
+    t.string  "description"
+    t.integer "ask_id"
+    t.integer "contact_id"
+    t.string  "dominant_emotion"
+    t.integer "user_id"
+    t.string  "ignored_terms"
+    t.float   "affection_friendliness"
+    t.float   "enjoyment_elation"
+    t.float   "amusement_excitement"
+    t.float   "contentment_gratitude"
+    t.float   "sadness_grief"
+    t.float   "anger_loathing"
+    t.float   "fear_uneasiness"
+    t.float   "humiliation_shame"
+    t.string  "sentiment"
+    t.float   "sentiment_score"
+    t.float   "coverage"
+    t.string  "intense_sentence"
+    t.string  "i_sentence_emotion"
+    t.float   "i_sentence_intensity"
+    t.float   "clarity"
+  end
+
   create_table "relationships", :force => true do |t|
     t.integer  "follower_id"
     t.integer  "followed_id"
@@ -99,6 +123,8 @@ ActiveRecord::Schema.define(:version => 20121121125547) do
     t.datetime "oauth_expires_at"
     t.string   "location"
     t.string   "image_url"
+    t.integer  "contacts_count",   :default => 0
+    t.integer  "asks_count",       :default => 0
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token", :unique => true

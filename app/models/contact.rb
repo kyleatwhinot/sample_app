@@ -3,7 +3,8 @@ class Contact < ActiveRecord::Base
 
   before_save 	:parse_due_date
   attr_accessible :name, :done, :date_done, :date_followed_up, :due_at
-  belongs_to :user
+  belongs_to :user, counter_cache: true
+  has_many :outcomes
   validates :name, presence: true
   #default_scope order: 'contacts.created_at ASC'
 

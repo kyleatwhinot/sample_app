@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :followers, through: :reverse_relationships, source: :follower
   has_many :followed_users, through: :relationships, source: :followed
   has_many :memberships, dependent: :destroy
+  #has_many :outcomes
 
   before_save { |user| user.email = email.downcase }
   before_save { create_remember_token }
@@ -32,7 +33,7 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true
 
   # define this but to do it correctly need to setup a counter cache http://railscasts.com/episodes/23-counter-cache-column
-  #scope :active_contacts, where(self.arel_table[:contacts_count].gt(0))
+  #scope :any_active_contacts, where("self.contacts.done IS ?", false).count > 0
 
   def following?(other_user)
     relationships.find_by_followed_id(other_user.id)

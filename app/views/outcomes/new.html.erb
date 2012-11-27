@@ -1,0 +1,8 @@
+      <div>
+        <%= form_for(@ask_outcome, url: ask_outcomes_path) do |o| %>
+          <%= o.label :description, "How did this Ask turn out?" %>
+          <%= o.text_area :description, placeholder: "Describe the outcome..." %>
+
+          <%= o.submit "Save outcome", class: "btn btn-small" %>
+        <% end %>
+      </div>

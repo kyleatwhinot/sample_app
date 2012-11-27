@@ -1,6 +1,6 @@
 <% if current_user.asks.where("followed_up = ?", false).any? %>
   <ul id="fulist">
-    <% current_user.asks.where('followed_up = ?', false).where('done = ?', true).each do |a| %> 
+    <% current_user.asks.done.done_ago(2).not_followed_up.each do |a| %> 
 		  <%= form_for(a) do |f| %>
   			<%= render 'shared/error_messages', object: f.object %>
   			<li class="up">

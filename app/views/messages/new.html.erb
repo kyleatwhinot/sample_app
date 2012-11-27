@@ -15,7 +15,7 @@
 </div>
 <div class="span3 offset1">
 	<h4>Other Asks from <%= @message.ask.user.name %></h4><hr>
-	<% @message.ask.user.asks.each do |a| %>
+	<% @message.ask.user.asks.where("public IS ?", true).each do |a| %>
 	<%= link_to(a.description, new_ask_message_path(a)) %>
 	<hr>
 	<% end %>

@@ -10,6 +10,7 @@ SampleApp::Application.routes.draw do
   resources :microposts, only: [:create, :destroy]
   resources :contacts
   resources :asks do
+    resources :outcomes, only: [:new, :create]
     resources :messages, only: [:new, :create]
   end
   resources :relationships, only: [:create, :destroy]
@@ -25,7 +26,7 @@ SampleApp::Application.routes.draw do
   match 'auth/:provider/callback', to: 'sessions#create'
   match 'auth/failure', to: redirect('/')
   match 'signout', to: 'sessions#destroy', as: 'signout'
-
+  match 'twilio/process_sms' => 'twilio#process_sms'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

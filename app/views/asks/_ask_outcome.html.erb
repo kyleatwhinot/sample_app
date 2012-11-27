@@ -1,0 +1,8 @@
+<div>
+	<%= form_for(@outcome, remote: true) %>
+		<%= f.label :description, "How did this Ask turn out?" %>
+		<%= f.text_area :description, "Describe the outcome..." %>
+
+		<%= f.submit "Save outcome" %>
+	<% end %>
+</div>

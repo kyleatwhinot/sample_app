@@ -22,8 +22,8 @@
 	</ul>
 	<%= f.label :category, "Expected outcome of the ASK?" %>
 	<% outcomes.each do |o| %>
-        <%= f.hidden_field :category, value: o %>
-        <%= f.submit "#{o.to_s}", class: "btn btn-small btn-primary btn-category", id:"ask3-btn" %>
+        <%= button_tag "#{o.to_s}", class: "btn btn-small btn-primary btn-category", id:"ask3-btn", name:"ask[category]", value: o %>
+        <% @outcomes = @ask.outcomes.build %>
 	<% end %>
 	</div>
 <% end %>

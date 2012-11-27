@@ -1,7 +1,7 @@
 <% if current_user.asks.any? %>
   <ul id="ask-list-items">
-    <% current_user.asks.where(done: false).each do |a| %> 
-		  <%= form_for(a, remote: true) do |f| %>
+    <% current_user.asks.not_done.each do |a| %> 
+		  <%= form_for(a) do |f| %>
   			<%= render 'shared/error_messages', object: f.object %>
   			<li class="up" id="a-<%= a.id %>">
   				<span class="cname">
@@ -14,14 +14,33 @@
         <li class="check">
           <%= a.category %>
         </li>
-          <span class="time-ago">
-            <%= "Added #{time_ago_in_words(a.created_at)} ago." %>
-          </span>
+        <span class="time-ago">
+          <%= "Added #{time_ago_in_words(a.created_at)} ago." %>
+        </span>
         <br>
-  		<%= f.hidden_field :date_done, value: Date.today %>
-      <%= f.hidden_field :done, :value=>true %>
-  		<%= f.submit "Mark as done", class: "btn btn-small hidden done_btn", id: "a-#{a.id}-done" %>
-		  <% end %>
+    		<%= f.hidden_field :date_done, value: Date.today %>
+        <%= f.hidden_field :done, :value=>true %>
+        <%= button_tag "Mark as done", class: "btn btn-small hidden done_btn", 
+                        id: "a-#{a.id}-done", href: "#outcome-"+a.id.to_s , data: { toggle: "modal" } %>
+        <% @outcomes = a.outcomes.build %>
+        <div id="outcome-<%= a.id %>" class="modal hide fade" tabindex="-1" 
+            role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Describe the outcome of this Ask.</h3>
+          </div>
+          <div class="modal-body">
+          <%= f.fields_for :outcomes do |builder| %>
+            <%= builder.text_area :description, placeholder: "Describe the outcome...", id: "ask-message" %>
+          <% end %>
+          <%= f.submit "Save outcome", class: "btn btn-primary" %>
+          </div>
+          <div class="modal-footer">
+            <p><em><strong>We will use these notes to help you improve future Asks.</strong></em></p>
+          </div>
+        </div>
+      <% end %>
     <% end %>
   </ul>
 <% end %>
+

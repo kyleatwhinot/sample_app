@@ -7,7 +7,7 @@
             <span class="time-ago"><%= "Added #{time_ago_in_words(c.created_at)} ago." %></span><br>
             <% unless c.due_at == nil %>
               <span class="time-ago due_<%= c.id %>">
-                  <%= "Target done by #{c.due_at.strftime('%b %e')}." %> <a href="#" id="<%= c.id %>">update</a><br>
+                  <%= "Due date: #{c.due_at.strftime('%b %e')}." %> <a href="#" id="<%= c.id %>">update</a><br>
               </span>
                 <div id="edit_due_at_<%= c.id %>" class="hidden">
                   <%= form_for(c) do |f| %>

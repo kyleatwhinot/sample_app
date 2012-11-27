@@ -6,6 +6,7 @@ class StaticPagesController < ApplicationController
       #@micropost  = current_user.microposts.build(params[:micropost])
       @contact = current_user.contacts.build(params[:contact])
       @ask = current_user.asks.build(params[:ask])
+      #@outcomes = Outcome.new
       #@feed_items = current_user.feed.paginate(page: params[:page])
     end
   end

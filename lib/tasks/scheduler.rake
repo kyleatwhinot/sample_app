@@ -77,7 +77,7 @@ end
 
 task :send_weekly_email_reminder => :environment do
 
-  users = User.all
+  users = User.joins(:contacts).group(:id).where("contacts.done IS ?", false).having("count(contacts.id) > 0")
   users.to_a
 
   users.each do |u|
